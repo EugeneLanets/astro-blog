@@ -1,21 +1,12 @@
 ---
-
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogPost from '@/components/BlogPost.astro';
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+const post = allPosts[0];
 ---
 
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Lanets</title>
-  </head>
-  <body>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/blog/">Blog</a>
-
-    <h1>Blog</h1>
-  </body>
-</html>
+<BaseLayout pageTitle="Blog">
+  <ul>
+    {allPosts.map((post: any) => <BlogPost title={post.frontmatter.title} url={post.url} />)}
+  </ul>
+</BaseLayout>
